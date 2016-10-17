@@ -13,7 +13,7 @@ module.exports = React.createClass({
     // updateResult :: Event -> State Result
     updateResult(urls) { this.setState({ results : urls})},
 
-    // searchClicked :: Event => Task
+    // searchClicked :: Event -> Task
     searchClicked(e) { flickrSearch(this.state.term).fork(this.props.showError, this.updateResult) },
 
     render() {
