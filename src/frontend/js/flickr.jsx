@@ -5,19 +5,22 @@ module.exports = React.createClass({
     displayName: 'Flickr',
 
     // getInitialState :: { term :: String, results :: [Url]}
-    getInitialState() { return { term: "", results : []} },
+    getInitialState() { return { term: "", results: [] } },
 
     // termChanged :: Event -> State Term
     termChanged({ currentTarget: t}) { this.setState({ term: t.value }) },
 
     // updateResult :: Event -> State Result
-    updateResult(urls) { this.setState({ results : urls})},
+    updateResult(urls) { this.setState({ results: urls }) },
 
     // searchClicked :: Event -> Task
     searchClicked(e) { flickrSearch(this.state.term).fork(this.props.showError, this.updateResult) },
 
+    // onDragStart :: Event -> State Event
+    onDragStart({ dataTransfer: dt, currentTarget: t }) { dt.setData('text', t.src) },
+
     render() {
-        const imgs = this.state.results.map((url) => <img src={url}/>)
+        const imgs = this.state.results.map((url) => <img src={url} draggable={true} onDragStart={this.onDragStart}/>)
         return (
             <div id="flickr">
                 <input onChange={this.termChanged} />
