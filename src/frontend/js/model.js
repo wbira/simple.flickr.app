@@ -1,5 +1,6 @@
-const { compose, replace, map, prop } = require('ramda')
+const { compose, curry, replace, map, prop } = require('ramda')
 const {getJSON} = require('jquery')
+const indexOf = require('./utils') //todo
 const Task = require('data.task')
 const daggy = require('daggy')
 
@@ -26,4 +27,9 @@ const toPhoto = compose(map(compose(newPhoto, prop('url_s'))), prop('photo'), pr
 // flickerSearch :: String -> Task Error [Photo]
 const flickrSearch = compose(map(toPhoto), Http.get, makeUrl)
 
-module.exports = { flickrSearch, Photo }
+const indexOfPhoto = curry((p, ps) => indexOf(p.src, ps.map(prop('src'))))
+
+// replacePhoto :: Photo -> [Photo] -> [Photo]
+const replacePhoto = curry((p,ps) => compose(map(remove(_, 1, ps)), indexOfPhoto))
+
+module.exports = { flickrSearch, Photo, replacePhoto }

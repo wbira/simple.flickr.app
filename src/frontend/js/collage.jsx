@@ -1,6 +1,7 @@
 const React = require('react')
+const DragImage = require('./drag_image')
 const { append } = require('ramda')
-const { Photo } = require('./model')
+const { Photo, replacePhoto } = require('./model')
 
 const preventDefault = (e) => e.preventDefault()
 
@@ -18,11 +19,11 @@ module.exports = React.createClass({
         const offset = t.getBoundingClientRect().top 
         const src = dt.getData('text')
         const photo = Photo(src, x, y - offset)
-        this.updatePhotos(append(photo, this.state.photos))
+        this.updatePhotos(replacePhoto(photo, this.state.photos))
     },
 
     render() {
-        const imgs = this.state.photos.map(photo => <img src={photo.src} style={{top: photo.y, left: photo.x}}/>)
+        const imgs = this.state.photos.map(photo => <DragImage src={photo.src} style={{top: photo.y, left: photo.x}}/>)
         return (
             <div id="collage" onDrop={this.onDrop} onDragOver={preventDefault}>
                 <div id="photos">{imgs}</div>

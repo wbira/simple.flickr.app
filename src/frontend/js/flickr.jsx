@@ -1,5 +1,6 @@
 const React = require('react');
 const { flickrSearch  } = require('./model')
+const DragImage = require('./drag_image')
 
 module.exports = React.createClass({
     displayName: 'Flickr',
@@ -11,7 +12,7 @@ module.exports = React.createClass({
     termChanged({ currentTarget: t}) { this.setState({ term: t.value }) },
 
     // updateResult :: Event -> State Result
-    updateResult(urls) { this.setState({ results: urls }) },
+    updateResult(photos) { this.setState({ results: photos }) },
 
     // searchClicked :: Event -> Task
     searchClicked(e) { flickrSearch(this.state.term).fork(this.props.showError, this.updateResult) },
@@ -20,7 +21,7 @@ module.exports = React.createClass({
     onDragStart({ dataTransfer: dt, currentTarget: t }) { dt.setData('text', t.src) },
 
     render() {
-        const imgs = this.state.results.map((photo) => <img src={photo.src} draggable={true} onDragStart={this.onDragStart}/>)
+        const imgs = this.state.results.map((photo) => <DragImage src={photo.src} />)
         return (
             <div id="flickr">
                 <input onChange={this.termChanged} />
