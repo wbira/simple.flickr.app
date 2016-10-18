@@ -26,4 +26,4 @@ const toPhoto = compose(map(compose(newPhoto, prop('url_s'))), prop('photo'), pr
 // flickerSearch :: String -> Task Error [Photo]
 const flickrSearch = compose(map(toPhoto), Http.get, makeUrl)
 
-module.exports = { flickrSearch }
+module.exports = { flickrSearch, Photo }
