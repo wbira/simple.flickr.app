@@ -4,7 +4,7 @@ const { flickrSearch  } = require('./model')
 module.exports = React.createClass({
     displayName: 'Flickr',
 
-    // getInitialState :: { term :: String, results :: [Url]}
+    // getInitialState :: { term :: String, results :: [Photo]}
     getInitialState() { return { term: "", results: [] } },
 
     // termChanged :: Event -> State Term
@@ -20,7 +20,7 @@ module.exports = React.createClass({
     onDragStart({ dataTransfer: dt, currentTarget: t }) { dt.setData('text', t.src) },
 
     render() {
-        const imgs = this.state.results.map((url) => <img src={url} draggable={true} onDragStart={this.onDragStart}/>)
+        const imgs = this.state.results.map((photo) => <img src={photo.src} draggable={true} onDragStart={this.onDragStart}/>)
         return (
             <div id="flickr">
                 <input onChange={this.termChanged} />
