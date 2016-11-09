@@ -2,8 +2,7 @@ const React = require('react')
 const DragImage = require('./drag_image')
 const { append } = require('ramda')
 const { Photo, replacePhoto } = require('./model')
-
-const preventDefault = (e) => e.preventDefault()
+const { preventDefault } = require('./utils')
 
 module.exports = React.createClass({
     displayName: 'Collage',

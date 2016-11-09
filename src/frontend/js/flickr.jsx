@@ -17,9 +17,6 @@ module.exports = React.createClass({
     // searchClicked :: Event -> Task
     searchClicked(e) { flickrSearch(this.state.term).fork(this.props.showError, this.updateResult) },
 
-    // onDragStart :: Event -> State Event
-    onDragStart({ dataTransfer: dt, currentTarget: t }) { dt.setData('text', t.src) },
-
     render() {
         const imgs = this.state.results.map((photo) => <DragImage src={photo.src} />)
         return (
